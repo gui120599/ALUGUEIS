@@ -1,0 +1,45 @@
+CREATE DATABASE boletim;
+
+USE boletim;
+
+CREATE TABLE pacientes(
+	cod_boletim INT AUTO_INCREMENT,
+	cod_paciente INT,
+	nome_paciente VARCHAR(90),
+	leito VARCHAR(50),
+	estado_geral VARCHAR(50),
+	nivel_consciencia VARCHAR(50),
+	diurese VARCHAR(50),
+	temperatura VARCHAR(50),
+	pressao VARCHAR(50),
+	respiracao VARCHAR(50),
+	data_ultima_atualizacao DATE,
+	hora_ultima_atualizacao TIME,
+	PRIMARY KEY (cod_boletim));
+
+CREATE TABLE perfil_usuario(
+	Cod_Perfil INT AUTO_INCREMENT,
+	Desc_Perfil VARCHAR(90),
+	PRIMARY KEY(Cod_Perfil));
+
+INSERT INTO perfil_usuario(Desc_Perfil) VALUES ('Médico');
+
+CREATE TABLE colaborador(
+	Cod_Colaborador INT AUTO_INCREMENT,
+	CRM_Medico VARCHAR(90),
+	Nome_Colaborador VARCHAR(90),
+	Telefone_Colaborador VARCHAR(90),
+	Status_Colaborador BOOLEAN,
+	PRIMARY KEY(Cod_Colaborador));
+
+INSERT INTO colaborador (Nome_Colaborador,CRM_Medico,Telefone_Colaborador,Status_Colaborador) VALUES ('Guilherme Marins dos Santos','3192','(62)9 9392-6738',1);
+
+CREATE TABLE usuario(
+	Cod_Usuario int auto_increment,
+	Cod_Perfil INT, FOREIGN KEY(Cod_Perfil)references perfil_usuario(Cod_Perfil),
+	Cod_Colaborador_usuario INT,FOREIGN KEY(Cod_Colaborador_usuario)references colaborador(Cod_Colaborador),
+	Login VARCHAR(90)NOT NULL,
+	Senha VARCHAR(90)NOT NULL,
+	PRIMARY KEY(Cod_Usuario));
+
+INSERT INTO usuario (Cod_Perfil,Cod_Colaborador_usuario,Login,Senha) VALUES (1,1,'gmsantos','200723');
