@@ -5,7 +5,7 @@
  */
 package Visao;
 
-import Dao.ClienteDao;
+import Dao.ClientesDao;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,7 +31,7 @@ public class TelaSelecionaCliente extends javax.swing.JDialog {
         JTCliente.getColumnModel().getColumn(2).setPreferredWidth(70);
         DefaultTableModel modelo = (DefaultTableModel) JTCliente.getModel();
         modelo.setNumRows(0);
-        ClienteDao cdao = new ClienteDao();
+        ClientesDao cdao = new ClientesDao();
 
         cdao.BuscarCliente().forEach((c) -> {
             modelo.addRow(new Object[]{

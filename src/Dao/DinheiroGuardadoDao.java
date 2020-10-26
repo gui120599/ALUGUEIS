@@ -6,7 +6,7 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.Cliente;
+import Modelo.Clientes;
 import Modelo.DinheiroGuardado;
 import java.awt.HeadlessException;
 import java.sql.SQLException;

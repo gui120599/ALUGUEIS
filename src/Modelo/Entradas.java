@@ -9,7 +9,7 @@ package Modelo;
  *
  * @author Suporte T.I 2
  */
-public class Vendas {
+public class Entradas {
     private int cod_venda;
     private int cod_cliente;
     private String descricao_venda;
@@ -21,10 +21,10 @@ public class Vendas {
     private int cod_condicao_pagamento;
     private int cod_tipo_pagamento;
 
-    public Vendas() {
+    public Entradas() {
     }
 
-    public Vendas(int cod_venda, int cod_cliente, String descricao_venda, double valor_custo, double valor_venda, double valor_lucro, double valor_desconto, String data_venda, int cod_condicao_pagamento, int cod_tipo_pagamento) {
+    public Entradas(int cod_venda, int cod_cliente, String descricao_venda, double valor_custo, double valor_venda, double valor_lucro, double valor_desconto, String data_venda, int cod_condicao_pagamento, int cod_tipo_pagamento) {
         this.cod_venda = cod_venda;
         this.cod_cliente = cod_cliente;
         this.descricao_venda = descricao_venda;

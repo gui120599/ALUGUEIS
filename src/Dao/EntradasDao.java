@@ -6,7 +6,7 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.Vendas;
+import Modelo.Entradas;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class EntradasDao {
     }
 //Método Salvar
 
-    public int SalvarVenda(Vendas a) {
+    public int SalvarVenda(Entradas a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -69,8 +69,8 @@ public class EntradasDao {
     }
 
 //Método Buscar
-    public Collection<Vendas > BuscarVendas() {
-        Collection<Vendas> ms = new ArrayList<>();
+    public Collection<Entradas > BuscarVendas() {
+        Collection<Entradas> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -79,7 +79,7 @@ public class EntradasDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                Vendas m = new Vendas();
+                Entradas m = new Entradas();
                 m.setCod_venda(c.getResultSet().getInt("Cod_venda"));
                 m.setDescricao_venda(c.getResultSet().getString("descricao_venda"));
                 m.setCod_condicao_pagamento(c.getResultSet().getInt("cod_condicao_pagamento"));
@@ -100,8 +100,8 @@ public class EntradasDao {
         return ms;
     }
 //Método Buscar
-    public Collection<Vendas > BuscarUltimaVenda() {
-        Collection<Vendas> ms = new ArrayList<>();
+    public Collection<Entradas > BuscarUltimaVenda() {
+        Collection<Entradas> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -110,7 +110,7 @@ public class EntradasDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                Vendas m = new Vendas();
+                Entradas m = new Entradas();
                 m.setCod_venda(c.getResultSet().getInt("Cod_venda"));
                 ms.add(m);
             }

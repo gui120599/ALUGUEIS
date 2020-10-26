@@ -6,7 +6,7 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.Cliente;
+import Modelo.Clientes;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ClientesDao {
     String Senha_Banco = "";
 //Método Salvar
 
-    public int SalvarCliente(Cliente a) {
+    public int SalvarCliente(Clientes a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -49,8 +49,8 @@ public class ClientesDao {
     }
 
 //Método Buscar
-    public Collection<Cliente> BuscarCliente() {
-        Collection<Cliente> ms = new ArrayList<>();
+    public Collection<Clientes> BuscarCliente() {
+        Collection<Clientes> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -59,7 +59,7 @@ public class ClientesDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                Cliente m = new Cliente();
+                Clientes m = new Clientes();
                 m.setCod_cliente(c.getResultSet().getInt("cod_cliente"));
                 m.setNome_cliente(c.getResultSet().getString("nome_cliente"));
                 m.setTelefone_cliente(c.getResultSet().getString("telefone_cliente"));

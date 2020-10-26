@@ -9,15 +9,15 @@ package Modelo;
  *
  * @author Suporte T.I 2
  */
-public class CondicaoPagamento {
+public class CondicoesPagamentos {
     private int cod_condicao;
     private String descricao_condicao;
     private int quantidade_parcela;
 
-    public CondicaoPagamento() {
+    public CondicoesPagamentos() {
     }
 
-    public CondicaoPagamento(int cod_condicao, String descricao_condicao, int quantidade_parcela) {
+    public CondicoesPagamentos(int cod_condicao, String descricao_condicao, int quantidade_parcela) {
         this.cod_condicao = cod_condicao;
         this.descricao_condicao = descricao_condicao;
         this.quantidade_parcela = quantidade_parcela;

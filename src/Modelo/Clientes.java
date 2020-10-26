@@ -9,16 +9,16 @@ package Modelo;
  *
  * @author Suporte T.I 2
  */
-public class Cliente {
+public class Clientes {
     private int cod_cliente;
     private String nome_cliente;
     private String telefone_cliente;
     private String cpf_cliente;
 
-    public Cliente() {
+    public Clientes() {
     }
 
-    public Cliente(int cod_cliente, String nome_cliente, String telefone_cliente, String cpf_cliente) {
+    public Clientes(int cod_cliente, String nome_cliente, String telefone_cliente, String cpf_cliente) {
         this.cod_cliente = cod_cliente;
         this.nome_cliente = nome_cliente;
         this.telefone_cliente = telefone_cliente;

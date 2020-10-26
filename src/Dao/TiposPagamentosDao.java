@@ -6,8 +6,8 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.Cliente;
-import Modelo.TipoPagamento;
+import Modelo.Clientes;
+import Modelo.TiposPagamentos;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class TiposPagamentosDao {
     String Senha_Banco = "";
 //Método Salvar
 
-    public int SalvarTipoPagamento(TipoPagamento a) {
+    public int SalvarTipoPagamento(TiposPagamentos a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -46,8 +46,8 @@ public class TiposPagamentosDao {
 
 
 //Método Buscar
-    public Collection<TipoPagamento> BuscarTipoPagamento() {
-        Collection<TipoPagamento> ms = new ArrayList<>();
+    public Collection<TiposPagamentos> BuscarTipoPagamento() {
+        Collection<TiposPagamentos> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -56,7 +56,7 @@ public class TiposPagamentosDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                TipoPagamento m = new TipoPagamento();
+                TiposPagamentos m = new TiposPagamentos();
                 m.setCod_tipo_pagamento(c.getResultSet().getInt("cod_tipo_pagamento"));
                 m.setDescricao_tipo_pagamento(c.getResultSet().getString("descricao_tipo_pagamento"));
                 ms.add(m);

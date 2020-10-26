@@ -5,9 +5,9 @@
  */
 package Visao;
 
-import Dao.ClienteDao;
+import Dao.ClientesDao;
 import Dao.ParcelaVendaDao;
-import Modelo.Cliente;
+import Modelo.Clientes;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -52,8 +52,8 @@ public class TelaParcelaVenda extends javax.swing.JFrame {
     }
 
     public void Salvar() {
-        Cliente c = new Cliente();
-        ClienteDao cdao = new ClienteDao();
+        Clientes c = new Clientes();
+        ClientesDao cdao = new ClientesDao();
         if (TxtNome.getText() == null || TxtNome.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Nome cliente é Obrigatorio!!");
             TxtNome.requestFocus();

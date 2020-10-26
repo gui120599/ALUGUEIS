@@ -5,8 +5,8 @@
  */
 package Visao;
 
-import Dao.CondicaoPagamentoDao;
-import Modelo.CondicaoPagamento;
+import Dao.CondicoesPagamentosDao;
+import Modelo.CondicoesPagamentos;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,7 +30,7 @@ public class TelaCondicaoPagamento extends javax.swing.JFrame {
         JTCondicaoPagamento.getColumnModel().getColumn(2).setPreferredWidth(70);
         DefaultTableModel modelo = (DefaultTableModel) JTCondicaoPagamento.getModel();
         modelo.setNumRows(0);
-        CondicaoPagamentoDao cdao = new CondicaoPagamentoDao();
+        CondicoesPagamentosDao cdao = new CondicoesPagamentosDao();
 
         cdao.BuscarCondicao().forEach((c) -> {
             modelo.addRow(new Object[]{
@@ -41,8 +41,8 @@ public class TelaCondicaoPagamento extends javax.swing.JFrame {
         });
     }
     public void Salvar(){
-        CondicaoPagamento c = new CondicaoPagamento();
-        CondicaoPagamentoDao cdao = new CondicaoPagamentoDao();
+        CondicoesPagamentos c = new CondicoesPagamentos();
+        CondicoesPagamentosDao cdao = new CondicoesPagamentosDao();
         
         c.setDescricao_condicao(TxtDescricao.getText());
         c.setQuantidade_parcela(Integer.parseInt(TxtQuantidadeParcelas.getText()));

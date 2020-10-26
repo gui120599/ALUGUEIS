@@ -6,7 +6,7 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.CondicaoPagamento;
+import Modelo.CondicoesPagamentos;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class CondicoesPagamentosDao {
     String Senha_Banco = "";
 //Método Salvar
 
-    public int SalvarCliente(CondicaoPagamento a) {
+    public int SalvarCliente(CondicoesPagamentos a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -47,8 +47,8 @@ public class CondicoesPagamentosDao {
 
 
 //Método Buscar
-    public Collection<CondicaoPagamento> BuscarCondicao() {
-        Collection<CondicaoPagamento> ms = new ArrayList<>();
+    public Collection<CondicoesPagamentos> BuscarCondicao() {
+        Collection<CondicoesPagamentos> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -57,7 +57,7 @@ public class CondicoesPagamentosDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                CondicaoPagamento m = new CondicaoPagamento();
+                CondicoesPagamentos m = new CondicoesPagamentos();
                 m.setCod_condicao(c.getResultSet().getInt("cod_condicao"));
                 m.setDescricao_condicao(c.getResultSet().getString("descricao_condicao"));
                 m.setQuantidade_parcela(c.getResultSet().getInt("quantidade_parcela"));

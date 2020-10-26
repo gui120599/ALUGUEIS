@@ -5,8 +5,8 @@
  */
 package Visao;
 
-import Dao.DespesaDao;
-import Modelo.Despesa;
+import Dao.SaidasDao;
+import Modelo.Saidas;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,7 +51,7 @@ public class TelaDespesa extends javax.swing.JFrame {
         JTDespesa.getColumnModel().getColumn(4).setPreferredWidth(30);
         DefaultTableModel modelo = (DefaultTableModel) JTDespesa.getModel();
         modelo.setNumRows(0);
-        DespesaDao cdao = new DespesaDao();
+        SaidasDao cdao = new SaidasDao();
 
         cdao.BuscarDespesa().forEach((c) -> {
             modelo.addRow(new Object[]{
@@ -65,8 +65,8 @@ public class TelaDespesa extends javax.swing.JFrame {
     }
 
     public void Salvar() {
-        Despesa d = new Despesa();
-        DespesaDao ddao = new DespesaDao();
+        Saidas d = new Saidas();
+        SaidasDao ddao = new SaidasDao();
 
         if (TxtDescricao.getText() == null || TxtDescricao.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Descrição é um campo obrigatório!");

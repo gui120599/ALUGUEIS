@@ -9,14 +9,14 @@ package Modelo;
  *
  * @author Suporte T.I 2
  */
-public class TipoPagamento {
+public class TiposPagamentos {
     private int cod_tipo_pagamento;
     private String descricao_tipo_pagamento;
 
-    public TipoPagamento() {
+    public TiposPagamentos() {
     }
 
-    public TipoPagamento(int cod_tipo_pagamento, String descricao_tipo_pagamento) {
+    public TiposPagamentos(int cod_tipo_pagamento, String descricao_tipo_pagamento) {
         this.cod_tipo_pagamento = cod_tipo_pagamento;
         this.descricao_tipo_pagamento = descricao_tipo_pagamento;
     }

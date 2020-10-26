@@ -5,8 +5,8 @@
  */
 package Visao;
 
-import Dao.ClienteDao;
-import Modelo.Cliente;
+import Dao.ClientesDao;
+import Modelo.Clientes;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,7 +33,7 @@ public class TelaCliente extends javax.swing.JFrame {
         JTCliente.getColumnModel().getColumn(2).setPreferredWidth(70);
         DefaultTableModel modelo = (DefaultTableModel) JTCliente.getModel();
         modelo.setNumRows(0);
-        ClienteDao cdao = new ClienteDao();
+        ClientesDao cdao = new ClientesDao();
 
         cdao.BuscarCliente().forEach((c) -> {
             modelo.addRow(new Object[]{
@@ -51,8 +51,8 @@ public class TelaCliente extends javax.swing.JFrame {
     }
 
     public void Salvar() {
-        Cliente c = new Cliente();
-        ClienteDao cdao = new ClienteDao();
+        Clientes c = new Clientes();
+        ClientesDao cdao = new ClientesDao();
         if (TxtNome.getText() == null || TxtNome.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Nome cliente é Obrigatorio!!");
             TxtNome.requestFocus();

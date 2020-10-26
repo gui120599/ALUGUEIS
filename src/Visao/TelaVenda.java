@@ -5,14 +5,14 @@
  */
 package Visao;
 
-import Dao.CondicaoPagamentoDao;
+import Dao.CondicoesPagamentosDao;
 import Dao.ItensVendaDao;
-import Dao.TipoPagamentoDao;
-import Dao.VendasDao;
-import Modelo.CondicaoPagamento;
+import Dao.TiposPagamentosDao;
+import Dao.EntradasDao;
+import Modelo.CondicoesPagamentos;
 import Modelo.ItensVenda;
-import Modelo.TipoPagamento;
-import Modelo.Vendas;
+import Modelo.TiposPagamentos;
+import Modelo.Entradas;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -40,7 +40,7 @@ public class TelaVenda extends javax.swing.JFrame {
     }
     
     public void AbrirVenda() {
-        VendasDao idao = new VendasDao();        
+        EntradasDao idao = new EntradasDao();        
         idao.AbrirVenda(0);
         idao.BuscarUltimaVenda().forEach((c) -> {
             TxtCodVenda.setText(Integer.toString(c.getCod_venda()));
@@ -80,14 +80,14 @@ public class TelaVenda extends javax.swing.JFrame {
     }
     
     public void PreencherComboTipoPagamento() {
-        TipoPagamentoDao udao = new TipoPagamentoDao();
+        TiposPagamentosDao udao = new TiposPagamentosDao();
         udao.BuscarTipoPagamento().forEach((u) -> {
             ComboBoxTipoPagamento.addItem(u);
         });
     }
     
     public void PreencherComboCondicaoPagamento() {
-        CondicaoPagamentoDao udao = new CondicaoPagamentoDao();
+        CondicoesPagamentosDao udao = new CondicoesPagamentosDao();
         udao.BuscarCondicao().forEach((u) -> {
             ComboBoxCondicaoPagamento.addItem(u);
         });
@@ -141,8 +141,8 @@ public class TelaVenda extends javax.swing.JFrame {
         MostrarValores();
     }
     public void SalvarVenda(){
-        Vendas v = new Vendas();
-        VendasDao vdao = new VendasDao();
+        Entradas v = new Entradas();
+        EntradasDao vdao = new EntradasDao();
         
         v.setCod_cliente(Integer.parseInt(TxtCodCliente.getText()));
         v.setCod_condicao_pagamento(Integer.parseInt(TxtCodCondicaoPagamento.getText()));
@@ -624,12 +624,12 @@ public class TelaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_TxtQuantidadeItemActionPerformed
 
     private void ComboBoxTipoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoPagamentoActionPerformed
-        TipoPagamento a = (TipoPagamento) ComboBoxTipoPagamento.getSelectedItem();
+        TiposPagamentos a = (TiposPagamentos) ComboBoxTipoPagamento.getSelectedItem();
         TxtCodTipoPagamento.setText(Integer.toString(a.getCod_tipo_pagamento()).trim());        // TODO add your handling code here:
     }//GEN-LAST:event_ComboBoxTipoPagamentoActionPerformed
 
     private void ComboBoxCondicaoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxCondicaoPagamentoActionPerformed
-        CondicaoPagamento a = (CondicaoPagamento) ComboBoxCondicaoPagamento.getSelectedItem();
+        CondicoesPagamentos a = (CondicoesPagamentos) ComboBoxCondicaoPagamento.getSelectedItem();
         TxtCodCondicaoPagamento.setText(Integer.toString(a.getCod_condicao()).trim());         // TODO add your handling code here:
     }//GEN-LAST:event_ComboBoxCondicaoPagamentoActionPerformed
 

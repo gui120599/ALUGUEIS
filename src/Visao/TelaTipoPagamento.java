@@ -5,8 +5,8 @@
  */
 package Visao;
 
-import Dao.TipoPagamentoDao;
-import Modelo.TipoPagamento;
+import Dao.TiposPagamentosDao;
+import Modelo.TiposPagamentos;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,7 +32,7 @@ public class TelaTipoPagamento extends javax.swing.JFrame {
         JTTipoPagamento.getColumnModel().getColumn(1).setPreferredWidth(100);
         DefaultTableModel modelo = (DefaultTableModel) JTTipoPagamento.getModel();
         modelo.setNumRows(0);
-        TipoPagamentoDao cdao = new TipoPagamentoDao();
+        TiposPagamentosDao cdao = new TiposPagamentosDao();
 
         cdao.BuscarTipoPagamento().forEach((c) -> {
             modelo.addRow(new Object[]{
@@ -48,8 +48,8 @@ public class TelaTipoPagamento extends javax.swing.JFrame {
     }
 
     public void Salvar() {
-        TipoPagamento c = new TipoPagamento();
-        TipoPagamentoDao cdao = new TipoPagamentoDao();
+        TiposPagamentos c = new TiposPagamentos();
+        TiposPagamentosDao cdao = new TiposPagamentosDao();
         if (TxtDescricao.getText() == null || TxtDescricao.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Descrição é Obrigatorio!!");
             TxtDescricao.requestFocus();
