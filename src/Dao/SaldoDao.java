@@ -6,7 +6,6 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.Clientes;
 import Modelo.Saldo;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -23,7 +22,7 @@ public class SaldoDao {
     String Tipo_Banco = "Mysql";
     String IP_Banco = "localhost";
     String Porta_Banco = "3306";
-    String Nome_Banco = "Financeiro";
+    String Nome_Banco = "Aluguel";
     String Usuario_Banco = "root";
     String Senha_Banco = "";
 //Método Salvar

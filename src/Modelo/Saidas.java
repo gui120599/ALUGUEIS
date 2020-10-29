@@ -10,53 +10,53 @@ package Modelo;
  * @author Suporte T.I 2
  */
 public class Saidas {
-    private int cod_despesa;
-    private String descricao_despesa;
-    private double valor_dispesa;
-    private String data_despesa;
+    private int cod_saida;
+    private String descricao_saida;
+    private double valor_saida;
+    private String data_saida;
     private int quantidade_meses;
 
     public Saidas() {
     }
 
     public Saidas(int cod_despesa, String descticao_despesa, double valor_dispesa, String data_despesa, int quantidade_meses) {
-        this.cod_despesa = cod_despesa;
-        this.descricao_despesa = descticao_despesa;
-        this.valor_dispesa = valor_dispesa;
-        this.data_despesa = data_despesa;
+        this.cod_saida = cod_despesa;
+        this.descricao_saida = descticao_despesa;
+        this.valor_saida = valor_dispesa;
+        this.data_saida = data_despesa;
         this.quantidade_meses = quantidade_meses;
     }
 
     public int getCod_despesa() {
-        return cod_despesa;
+        return cod_saida;
     }
 
     public void setCod_despesa(int cod_despesa) {
-        this.cod_despesa = cod_despesa;
+        this.cod_saida = cod_despesa;
     }
 
     public String getDescticao_despesa() {
-        return descricao_despesa;
+        return descricao_saida;
     }
 
     public void setDescticao_despesa(String descticao_despesa) {
-        this.descricao_despesa = descticao_despesa;
+        this.descricao_saida = descticao_despesa;
     }
 
     public double getValor_dispesa() {
-        return valor_dispesa;
+        return valor_saida;
     }
 
     public void setValor_dispesa(double valor_dispesa) {
-        this.valor_dispesa = valor_dispesa;
+        this.valor_saida = valor_dispesa;
     }
 
     public String getData_despesa() {
-        return data_despesa;
+        return data_saida;
     }
 
     public void setData_despesa(String data_despesa) {
-        this.data_despesa = data_despesa;
+        this.data_saida = data_despesa;
     }
 
     public int getQuantidade_meses() {

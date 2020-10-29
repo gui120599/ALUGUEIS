@@ -26,7 +26,7 @@ public class CondicoesPagamentosDao {
     String Senha_Banco = "";
 //Método Salvar
 
-    public int SalvarCliente(CondicoesPagamentos a) {
+    public int SalvarCondicao(CondicoesPagamentos a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -40,6 +40,23 @@ public class CondicoesPagamentosDao {
 
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro ao Salvar: " + e);
+            return 0;
+        }
+
+    }
+    public int AtualizarCondicao(CondicoesPagamentos a) {
+        Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
+        try {
+            c.conectar();
+            String sql = "UPDATE CondicoesPagamentos SET "
+                    + "descricao_condicao ='"+a.getDescricao_condicao()+"', "
+                    + "quantidade_parcela ='"+a.getQuantidade_parcela()+"' "
+                    + "WHERE cod_condicao = "+a.getCod_condicao()+" ;";
+            JOptionPane.showMessageDialog(null, "Condição de Pagamento Atualizada com sucesso!");
+            return c.queryIncluir(sql);
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Atualizar: " + e);
             return 0;
         }
 

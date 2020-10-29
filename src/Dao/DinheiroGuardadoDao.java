@@ -6,7 +6,6 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.Clientes;
 import Modelo.DinheiroGuardado;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -23,7 +22,7 @@ public class DinheiroGuardadoDao {
     String Tipo_Banco = "Mysql";
     String IP_Banco = "localhost";
     String Porta_Banco = "3306";
-    String Nome_Banco = "Financeiro";
+    String Nome_Banco = "Aluguel";
     String Usuario_Banco = "root";
     String Senha_Banco = "";
 //Método Salvar
@@ -33,7 +32,7 @@ public class DinheiroGuardadoDao {
         try {
             c.conectar();
             String sql = "INSERT INTO DinheiroGuardado("
-                    + "local_dinheiro,"
+                    + "local_guardado,"
                     + "valor_guardado) VALUES("
                     + "'" + a.getLocal_dinheiro() + "',"
                     + "" + a.getValor_guardado() + ");";
@@ -52,7 +51,7 @@ public class DinheiroGuardadoDao {
         try {
             c.conectar();
             String sql = "UPDATE DinheiroGuardado SET "
-                    + "local_dinheiro = '" + a.getLocal_dinheiro() + "',"
+                    + "local_guardado = '" + a.getLocal_dinheiro() + "',"
                     + "valor_guardado = " + a.getValor_guardado() + " "
                     + "WHERE cod_dinheiro = " + a.getCod_dinheiro() + ";";
             JOptionPane.showMessageDialog(null, "Dinheiro Guardado Atualizado com sucesso!");
@@ -78,7 +77,7 @@ public class DinheiroGuardadoDao {
             while (c.getResultSet().next()) {
                 DinheiroGuardado m = new DinheiroGuardado();
                 m.setCod_dinheiro(c.getResultSet().getInt("cod_dinheiro"));
-                m.setLocal_dinheiro(c.getResultSet().getString("local_dinheiro"));
+                m.setLocal_dinheiro(c.getResultSet().getString("local_guardado"));
                 m.setValor_guardado(c.getResultSet().getDouble("valor_guardado"));
                 ms.add(m);
             }

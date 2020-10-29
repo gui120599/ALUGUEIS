@@ -21,7 +21,7 @@ public class SaidasDao {
     String Tipo_Banco = "Mysql";
     String IP_Banco = "localhost";
     String Porta_Banco = "3306";
-    String Nome_Banco = "Financeiro";
+    String Nome_Banco = "Aluguel";
     String Usuario_Banco = "root";
     String Senha_Banco = "";
 //Método Salvar
@@ -30,16 +30,16 @@ public class SaidasDao {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
-            String sql = "INSERT INTO Despesa("
-                    + "descricao_despesa,"
-                    + "valor_despesa,"
+            String sql = "INSERT INTO Saidas("
+                    + "descricao_saida,"
+                    + "valor_saida,"
                     + "data_inicial,"
                     + "quantidade_meses) VALUES("
                     + "'" + a.getDescticao_despesa() + "',"
                     + "" + a.getValor_dispesa() + ","
                     + "'"+a.getData_despesa()+"',"
                     + "'"+ a.getQuantidade_meses()+"');";
-            JOptionPane.showMessageDialog(null, "Cliente salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Saida salva com sucesso!");
             return c.queryIncluir(sql);
 
         } catch (HeadlessException e) {
@@ -57,14 +57,14 @@ public class SaidasDao {
         try {
             c.conectar();
 
-            String sql = "SELECT * FROM Despesa ";
+            String sql = "SELECT * FROM Saidas ";
 
             c.query(sql);
             while (c.getResultSet().next()) {
                 Saidas m = new Saidas();
-                m.setCod_despesa(c.getResultSet().getInt("cod_despesa"));
-                m.setDescticao_despesa(c.getResultSet().getString("descricao_despesa"));
-                m.setValor_dispesa(c.getResultSet().getDouble("valor_despesa"));
+                m.setCod_despesa(c.getResultSet().getInt("cod_saida"));
+                m.setDescticao_despesa(c.getResultSet().getString("descricao_saida"));
+                m.setValor_dispesa(c.getResultSet().getDouble("valor_saida"));
                 m.setData_despesa(c.getResultSet().getString("data_inicial"));
                 m.setQuantidade_meses(c.getResultSet().getInt("quantidade_meses"));
                 ms.add(m);

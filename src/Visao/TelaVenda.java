@@ -6,7 +6,7 @@
 package Visao;
 
 import Dao.CondicoesPagamentosDao;
-import Dao.ItensVendaDao;
+import Dao.ItensEntradaDao;
 import Dao.TiposPagamentosDao;
 import Dao.EntradasDao;
 import Modelo.CondicoesPagamentos;
@@ -54,7 +54,7 @@ public class TelaVenda extends javax.swing.JFrame {
         JTClientes.getColumnModel().getColumn(2).setPreferredWidth(70);
         DefaultTableModel modelo = (DefaultTableModel) JTClientes.getModel();
         modelo.setNumRows(0);
-        ItensVendaDao cdao = new ItensVendaDao();
+        ItensEntradaDao cdao = new ItensEntradaDao();
         
         cdao.BuscarItens(Integer.parseInt(TxtCodVenda.getText())).forEach((c) -> {
             modelo.addRow(new Object[]{
@@ -69,7 +69,7 @@ public class TelaVenda extends javax.swing.JFrame {
     public void MostrarValores() {
         
         
-        ItensVendaDao cdao = new ItensVendaDao();
+        ItensEntradaDao cdao = new ItensEntradaDao();
         
         cdao.BuscarItens(Integer.parseInt(TxtCodVenda.getText())).forEach((c) -> {
                 LbLucro.setText(Double.toString(c.getValor_lucro()));
@@ -113,7 +113,7 @@ public class TelaVenda extends javax.swing.JFrame {
     //Salvar Item da Venda
     public void SalvarItemVenda() {
         ItensVenda i = new ItensVenda();
-        ItensVendaDao idao = new ItensVendaDao();
+        ItensEntradaDao idao = new ItensEntradaDao();
         if (TxtDescItem.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Descrição do item é obrigatório!");
             TxtDescItem.requestFocus();
@@ -151,7 +151,7 @@ public class TelaVenda extends javax.swing.JFrame {
         v.setValor_custo(Double.parseDouble(LbCusto.getText()));
         v.setValor_lucro(Double.parseDouble(LbLucro.getText()));
         v.setValor_venda(Double.parseDouble(LbTotal.getText()));
-        vdao.SalvarVenda(v);
+        vdao.SalvarEntrada(v);
     }
 
     /**
@@ -217,7 +217,7 @@ public class TelaVenda extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Calibri", 3, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Vendas");
+        jLabel1.setText("Entradas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -393,24 +393,23 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TxtLucro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(TxtDescItem, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(TxtValorLucroItem, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel10)
-                            .addGap(18, 18, 18)
-                            .addComponent(TxtQuantidadeItem))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(TxtValorCustoItem, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(LbValorTotalItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(TxtValorVendaItem, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(TxtValorLucroItem, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(TxtQuantidadeItem))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtValorCustoItem, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LbValorTotalItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(TxtValorVendaItem, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -665,6 +664,7 @@ public class TelaVenda extends javax.swing.JFrame {
 
     private void TxtQuantidadeItemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtQuantidadeItemKeyReleased
         quantidade = Integer.parseInt(TxtQuantidadeItem.getText());
+        //Coloca no padrão de reais somente 2 casas após a vírgula
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
         TotalItem = (Double.parseDouble(VendaConvertido) * (Integer.parseInt(TxtQuantidadeItem.getText())));

@@ -57,6 +57,7 @@ public class TelaTipoPagamento extends javax.swing.JFrame {
             c.setDescricao_tipo_pagamento(TxtDescricao.getText());
             cdao.SalvarTipoPagamento(c);
             MostrarTipoPagamento();
+            LimparCampos();
         }
     }
 

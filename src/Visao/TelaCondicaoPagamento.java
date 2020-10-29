@@ -7,6 +7,7 @@ package Visao;
 
 import Dao.CondicoesPagamentosDao;
 import Modelo.CondicoesPagamentos;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,6 +24,7 @@ public class TelaCondicaoPagamento extends javax.swing.JFrame {
         MostrarCodicaoPagamento();
         ButtonCodigo.setSelected(true);
     }
+
     //carrega Tabela
     public void MostrarCodicaoPagamento() {
         JTCondicaoPagamento.getColumnModel().getColumn(0).setPreferredWidth(60);
@@ -40,14 +42,50 @@ public class TelaCondicaoPagamento extends javax.swing.JFrame {
             });
         });
     }
-    public void Salvar(){
+
+    //Limpa os campos
+    public void LimparCampos() {
+        TxtCod.setText("");
+        TxtDescricao.setText("");
+        TxtQuantidadeParcelas.setText("");
+    }
+
+    //Salvar
+    public void Salvar() {
         CondicoesPagamentos c = new CondicoesPagamentos();
         CondicoesPagamentosDao cdao = new CondicoesPagamentosDao();
-        
-        c.setDescricao_condicao(TxtDescricao.getText());
-        c.setQuantidade_parcela(Integer.parseInt(TxtQuantidadeParcelas.getText()));
-        cdao.SalvarCliente(c);
-        MostrarCodicaoPagamento();
+        if (TxtDescricao.getText() == null || TxtDescricao.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo descriçao é Obrigatório!!");
+            TxtDescricao.requestFocus();
+        } else if (TxtQuantidadeParcelas.getText() == null || TxtQuantidadeParcelas.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Quantidade de Parcelas é Obrigatório!");
+            TxtQuantidadeParcelas.requestFocus();
+        } else {
+            c.setDescricao_condicao(TxtDescricao.getText());
+            c.setQuantidade_parcela(Integer.parseInt(TxtQuantidadeParcelas.getText()));
+            cdao.SalvarCondicao(c);
+            MostrarCodicaoPagamento();
+            LimparCampos();
+        }
+    }
+    //Atualizar
+    public void Atualizar() {
+        CondicoesPagamentos c = new CondicoesPagamentos();
+        CondicoesPagamentosDao cdao = new CondicoesPagamentosDao();
+        if (TxtDescricao.getText() == null || TxtDescricao.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo descriçao é Obrigatório!!");
+            TxtDescricao.requestFocus();
+        } else if (TxtQuantidadeParcelas.getText() == null || TxtQuantidadeParcelas.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Campo Quantidade de Parcelas é Obrigatório!");
+            TxtQuantidadeParcelas.requestFocus();
+        } else {
+            c.setCod_condicao(Integer.parseInt(TxtCod.getText()));
+            c.setDescricao_condicao(TxtDescricao.getText());
+            c.setQuantidade_parcela(Integer.parseInt(TxtQuantidadeParcelas.getText()));
+            cdao.AtualizarCondicao(c);
+            MostrarCodicaoPagamento();
+            LimparCampos();
+        }
     }
 
     /**
@@ -269,7 +307,11 @@ public class TelaCondicaoPagamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarActionPerformed
-        Salvar();        // TODO add your handling code here:
+        if(TxtCod.getText() == null || TxtCod.getText().equals("")){
+            Salvar();
+        }else{
+            Atualizar();
+        }
     }//GEN-LAST:event_SalvarActionPerformed
 
     private void JTCondicaoPagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTCondicaoPagamentoMouseClicked

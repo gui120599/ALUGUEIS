@@ -22,7 +22,7 @@ public class TiposPagamentosDao {
     String Tipo_Banco = "Mysql";
     String IP_Banco = "localhost";
     String Porta_Banco = "3306";
-    String Nome_Banco = "Financeiro";
+    String Nome_Banco = "Aluguel";
     String Usuario_Banco = "root";
     String Senha_Banco = "";
 //Método Salvar
@@ -31,7 +31,7 @@ public class TiposPagamentosDao {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
-            String sql = "INSERT INTO TipoPagamento("
+            String sql = "INSERT INTO TiposPagamentos("
                     + "descricao_tipo_pagamento) VALUES("
                     + "'" + a.getDescricao_tipo_pagamento() + "');";
             JOptionPane.showMessageDialog(null, "Tipo Pagamento salvo com sucesso!");
@@ -52,7 +52,7 @@ public class TiposPagamentosDao {
         try {
             c.conectar();
 
-            String sql = "SELECT * FROM TipoPagamento ";
+            String sql = "SELECT * FROM TiposPagamentos ";
 
             c.query(sql);
             while (c.getResultSet().next()) {

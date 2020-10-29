@@ -19,6 +19,8 @@ public class TelaDinheiroGuardado extends javax.swing.JFrame {
     /**
      * Creates new form TelaCliente
      */
+    String ValorConvertido;
+
     public TelaDinheiroGuardado() {
         initComponents();
         MostrarCliente();
@@ -66,7 +68,12 @@ public class TelaDinheiroGuardado extends javax.swing.JFrame {
         } else {
             c.setCod_dinheiro(Integer.parseInt(TxtCod.getText()));
             c.setLocal_dinheiro(TxtLocalGuardado.getText());
-            c.setValor_guardado(Double.parseDouble(TxtValorGuardado.getText()));
+
+//Faz troca do , pelo .
+            ValorConvertido = String.valueOf(TxtValorGuardado.getText());
+            ValorConvertido = ValorConvertido.replaceAll(",", ".");
+
+            c.setValor_guardado(Double.parseDouble(ValorConvertido));
             cdao.AtualizarDinheiro(c);
             MostrarCliente();
             LimparCampos();
@@ -84,7 +91,12 @@ public class TelaDinheiroGuardado extends javax.swing.JFrame {
             TxtValorGuardado.requestFocus();
         } else {
             c.setLocal_dinheiro(TxtLocalGuardado.getText());
-            c.setValor_guardado(Double.parseDouble(TxtValorGuardado.getText()));
+
+             //Faz troca do , pelo .
+            ValorConvertido = String.valueOf(TxtValorGuardado.getText());
+            ValorConvertido = ValorConvertido.replaceAll(",", ".");
+
+            c.setValor_guardado(Double.parseDouble(ValorConvertido));
             cdao.SalvarDinheiro(c);
             MostrarCliente();
             LimparCampos();
@@ -317,14 +329,17 @@ public class TelaDinheiroGuardado extends javax.swing.JFrame {
             Atualizar();
             jPanel1.requestFocus();
         }
-        
+
     }//GEN-LAST:event_SalvarActionPerformed
 
     private void JTDinheiroGuardadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTDinheiroGuardadoMouseClicked
         if (JTDinheiroGuardado.getSelectedRow() != -1) {
             TxtCod.setText(JTDinheiroGuardado.getValueAt(JTDinheiroGuardado.getSelectedRow(), 0).toString());
             TxtLocalGuardado.setText(JTDinheiroGuardado.getValueAt(JTDinheiroGuardado.getSelectedRow(), 1).toString());
-            TxtValorGuardado.setText(JTDinheiroGuardado.getValueAt(JTDinheiroGuardado.getSelectedRow(), 2).toString());
+            //Faz troca fe . por ,
+            ValorConvertido = String.valueOf(JTDinheiroGuardado.getValueAt(JTDinheiroGuardado.getSelectedRow(), 2).toString());
+            ValorConvertido = ValorConvertido.replaceAll("\\.", ",");
+            TxtValorGuardado.setText(ValorConvertido);
         }
     }//GEN-LAST:event_JTDinheiroGuardadoMouseClicked
 

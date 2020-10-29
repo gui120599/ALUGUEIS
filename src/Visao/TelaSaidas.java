@@ -14,15 +14,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Suporte T.I 2
  */
-public class TelaDespesa extends javax.swing.JFrame {
+public class TelaSaidas extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaDespesa
      */
     String DataConvertidaISO;
     String DataConvertidaBR;
+    String ValorConvertido;
     String DataISO;
-    public TelaDespesa() {
+    public TelaSaidas() {
         initComponents();
         MostrarDespesa();
     }
@@ -81,10 +82,16 @@ public class TelaDespesa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Quantidade de meses é um campo obrigatório!");
             TxtQuantidadeMeses.requestFocus();
         } else {
+            
+            //Faz troca do , pelo .
+            ValorConvertido = String.valueOf(TxtValor.getText());
+            ValorConvertido = ValorConvertido.replaceAll(",", ".");
+            
+            
             ConverterDataBR();
             d.setDescticao_despesa(TxtDescricao.getText());
             d.setData_despesa(DataConvertidaISO);
-            d.setValor_dispesa(Double.parseDouble(TxtValor.getText()));
+            d.setValor_dispesa(Double.parseDouble(ValorConvertido));
             d.setQuantidade_meses(Integer.parseInt(TxtQuantidadeMeses.getText()));
             ddao.SalvarDespesa(d);
             MostrarDespesa();
@@ -142,7 +149,7 @@ public class TelaDespesa extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Calibri", 3, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Despesas");
+        jLabel1.setText("Saidas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -374,7 +381,11 @@ public class TelaDespesa extends javax.swing.JFrame {
         if (JTDespesa.getSelectedRow() != -1) {
             TxtCod.setText(JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 0).toString());
             TxtDescricao.setText(JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 1).toString());
-            TxtValor.setText(JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 2).toString());
+            //Faz a troca . por ,
+            ValorConvertido = String.valueOf(JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 2).toString());
+            ValorConvertido = ValorConvertido.replaceAll("\\.", ",");
+            TxtValor.setText(ValorConvertido);
+            
             DataISO =  JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 3).toString();
             ConverterDataISO();
             TxtDataInicial.setText(DataConvertidaBR);
@@ -399,20 +410,21 @@ public class TelaDespesa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaDespesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaDespesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaDespesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaDespesa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaSaidas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaDespesa().setVisible(true);
+                new TelaSaidas().setVisible(true);
             }
         });
     }
