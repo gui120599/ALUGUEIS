@@ -6,6 +6,7 @@
 package Dao;
 
 import Conexao.Conexao;
+import Modelo.ItensCompra;
 import Modelo.ItensVenda;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author Suporte T.I 2
  */
-public class ItensEntradaDao {
+public class ItensCompraDao {
 
     String Tipo_Banco = "Mysql";
     String IP_Banco = "localhost";
@@ -27,26 +28,22 @@ public class ItensEntradaDao {
     String Senha_Banco = "";
 //Método Salvar
 
-    public int SalvarItem(ItensVenda a) {
+    public int SalvarItem(ItensCompra a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
-            String sql = "INSERT INTO ItensEntrada("
-                    + "cod_entrada,"
-                    + "descricao_item_entrada,"
+            String sql = "INSERT INTO ItensCompra("
+                    + "cod_compra,"
+                    + "descricao_item_compra,"
                     + "quantidade,"
-                    + "valor_custo,"
-                    + "valor_venda,"
-                    + "valor_lucro,"
-                    + "valor_total"
+                    + "valor_item_compra,"
+                    + "valor_total_item_compra"
                     + ") VALUES("
-                    + "" + a.getCod_venda() + ","
-                    + "'" + a.getDescricao_item() + "',"
+                    + "" + a.getCod_compra() + ","
+                    + "'" + a.getDescricao_item_compra() + "',"
                     + "" + a.getQuantidade() + ","
-                    + "" + a.getValor_custo() + ","
-                    + "" + a.getValor_venda() + ","
-                    + "" + a.getValor_lucro() + ","
-                    + "" + a.getValor_total() + ");";
+                    + "" + a.getValor_item_compra() + ","
+                    + "" + a.getValor_total_item_compra() + ");";
             JOptionPane.showMessageDialog(null, "Item registrado com sucesso!");
             return c.queryIncluir(sql);
 
@@ -58,25 +55,23 @@ public class ItensEntradaDao {
     }
 
 //Método Buscar
-    public Collection<ItensVenda> BuscarItens(int cod_entrada) {
-        Collection<ItensVenda> ms = new ArrayList<>();
+        public Collection<ItensCompra> BuscarItensCompra(int cod_compra) {
+        Collection<ItensCompra> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
 
-            String sql = "SELECT * FROM ItensEntrada WHERE cod_entrada = " + cod_entrada + "; ";
+            String sql = "SELECT * FROM ItensCompra WHERE cod_compra = " + cod_compra + "; ";
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                ItensVenda m = new ItensVenda();
-                m.setCod_item(c.getResultSet().getInt("cod_item_entrada"));
-                m.setCod_venda(c.getResultSet().getInt("Cod_entrada"));
-                m.setDescricao_item(c.getResultSet().getString("descricao_item_entrada"));
+                ItensCompra m = new ItensCompra();
+                m.setCod_item_compra(c.getResultSet().getInt("cod_item_compra"));
+                m.setCod_compra(c.getResultSet().getInt("Cod_compra"));
+                m.setDescricao_item_compra(c.getResultSet().getString("descricao_item_compra"));
                 m.setQuantidade(c.getResultSet().getInt("quantidade"));
-                m.setValor_custo(c.getResultSet().getDouble("valor_custo"));
-                m.setValor_venda(c.getResultSet().getDouble("valor_venda"));
-                m.setValor_lucro(c.getResultSet().getDouble("valor_lucro"));
-                m.setValor_total(c.getResultSet().getDouble("valor_total"));
+                m.setValor_item_compra(c.getResultSet().getDouble("valor_item_compra"));
+                m.setValor_total_item_compra(c.getResultSet().getDouble("valor_total_item_compra"));
                 ms.add(m);
             }
         } catch (SQLException e) {

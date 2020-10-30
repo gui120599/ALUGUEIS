@@ -6,7 +6,7 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.Saidas;
+import Modelo.Compras;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Suporte T.I 2
  */
-public class SaidasDao {
+public class ComprasDao {
     String Tipo_Banco = "Mysql";
     String IP_Banco = "localhost";
     String Porta_Banco = "3306";
@@ -26,20 +26,20 @@ public class SaidasDao {
     String Senha_Banco = "";
 //Método Salvar
 
-    public int SalvarDespesa(Saidas a) {
+    public int SalvarDespesa(Compras a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
-            String sql = "INSERT INTO Saidas("
-                    + "descricao_saida,"
-                    + "valor_saida,"
-                    + "data_inicial,"
-                    + "quantidade_meses) VALUES("
-                    + "'" + a.getDescticao_despesa() + "',"
-                    + "" + a.getValor_dispesa() + ","
-                    + "'"+a.getData_despesa()+"',"
-                    + "'"+ a.getQuantidade_meses()+"');";
-            JOptionPane.showMessageDialog(null, "Saida salva com sucesso!");
+            String sql = "INSERT INTO Compras("
+                    + "descricao_compra,"
+                    + "valor_compra,"
+                    + "data_compra,"
+                    + "cod_dinheiro) VALUES("
+                    + "'" + a.getDescricao_compra() + "',"
+                    + "" + a.getValor_compra() + ","
+                    + "'"+a.getData_compra()+"',"
+                    + "'"+ a.getCod_dinheiro_utilizado()+"');";
+            JOptionPane.showMessageDialog(null, "Compra salva com sucesso!");
             return c.queryIncluir(sql);
 
         } catch (HeadlessException e) {
@@ -51,22 +51,22 @@ public class SaidasDao {
 
 
 //Método Buscar
-    public Collection<Saidas > BuscarDespesa() {
-        Collection<Saidas> ms = new ArrayList<>();
+    public Collection<Compras > BuscarDespesa() {
+        Collection<Compras> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
 
-            String sql = "SELECT * FROM Saidas ";
+            String sql = "SELECT * FROM Compras ";
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                Saidas m = new Saidas();
-                m.setCod_despesa(c.getResultSet().getInt("cod_saida"));
-                m.setDescticao_despesa(c.getResultSet().getString("descricao_saida"));
-                m.setValor_dispesa(c.getResultSet().getDouble("valor_saida"));
-                m.setData_despesa(c.getResultSet().getString("data_inicial"));
-                m.setQuantidade_meses(c.getResultSet().getInt("quantidade_meses"));
+                Compras m = new Compras();
+                m.setCod_compra(c.getResultSet().getInt("cod_compra"));
+                m.setDescricao_compra(c.getResultSet().getString("descricao_compra"));
+                m.setValor_compra(c.getResultSet().getDouble("valor_compra"));
+                m.setData_compra(c.getResultSet().getString("data_compra"));
+                m.setCod_dinheiro_utilizado(c.getResultSet().getInt("cod_dinheiro"));
                 ms.add(m);
             }
         } catch (SQLException e) {

@@ -20,17 +20,32 @@ CREATE TABLE TiposPagamentos(
 	descricao_tipo_pagamento VARCHAR(90),
 	PRIMARY KEY(cod_tipo_pagamento));
 
-CREATE TABLE Saidas(
-	cod_saida INT AUTO_INCREMENT,
-	descricao_saida VARCHAR(90),
-	valor_saida DECIMAL(10,2),
-	data_inicial DATE,
-	quantidade_meses INT,
-	PRIMARY KEY(cod_saida));
+CREATE TABLE DinheiroGuardado(
+	cod_dinheiro INT AUTO_INCREMENT,
+	local_guardado VARCHAR(90),
+	valor_guardado DECIMAL(10,2),
+	PRIMARY KEY(cod_dinheiro));
+
+CREATE TABLE Compras(
+	cod_compra INT AUTO_INCREMENT,
+	descricao_compra VARCHAR(200),
+	valor_compra DECIMAL(10,2),
+	data_compra DATE,
+	cod_dinheiro INT, FOREIGN KEY(cod_dinheiro)REFERENCES DinheiroGuardado(cod_dinheiro),
+	PRIMARY KEY(cod_compra));
+
+CREATE TABLE ItensCompra(
+        cod_item_compra INT AUTO_INCREMENT,
+        cod_compra INT,FOREIGN KEY(cod_compra)REFERENCES Compras(cod_compra),
+        descricao_item_compra VARCHAR(90),
+        quantidade INT,
+        valor_item_compra DECIMAL(10,2),
+        valor_total_item_compra DECIMAL(10,2),
+        PRIMARY KEY(cod_item_compra));
 	
 CREATE TABLE Entradas(
 	cod_entrada INT AUTO_INCREMENT,
-	cod_cliente INT,FOREIGN KEY(cod_cliente)references Clientes(cod_cliente),
+	cod_cliente INT,FOREIGN KEY(cod_cliente)REFERENCES Clientes(cod_cliente),
 	descricao_entrada VARCHAR(90),
 	valor_entrada DECIMAL(10,2),
 	valor_desconto DECIMAL(10,2),
@@ -41,21 +56,15 @@ CREATE TABLE Entradas(
 	PRIMARY KEY(cod_entrada));
 
 CREATE TABLE ItensEntrada(
-	cod_item INT AUTO_INCREMENT,
+	cod_item_entrada INT AUTO_INCREMENT,
 	cod_entrada INT,FOREIGN KEY(cod_entrada)REFERENCES Entradas(cod_entrada),
-	descricao_item VARCHAR(90),
+	descricao_item_entrada VARCHAR(90),
 	quantidade INT,
 	valor_custo DECIMAL(10,2),
 	valor_venda DECIMAL(10,2),
 	valor_lucro DECIMAL(10,2),
 	valor_total DECIMAL(10,2),
-	PRIMARY KEY(cod_item));
-
-CREATE TABLE DinheiroGuardado(
-	cod_dinheiro INT AUTO_INCREMENT,
-	local_guardado VARCHAR(90),
-	valor_guardado DECIMAL(10,2),
-	PRIMARY KEY(cod_dinheiro));
+	PRIMARY KEY(cod_item_entrada));
 
 CREATE TABLE Saldo(
 	cod_saldo INT AUTO_INCREMENT,
