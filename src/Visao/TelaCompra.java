@@ -29,6 +29,7 @@ public class TelaCompra extends javax.swing.JFrame {
     String DataISO;
     Double TotalItem;
     int CodCompra;
+
     public TelaCompra() {
         initComponents();
         MostrarCompra();
@@ -622,7 +623,7 @@ public class TelaCompra extends javax.swing.JFrame {
     private void JTDespesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTDespesaMouseClicked
 
         if (JTDespesa.getSelectedRow() != -1) {
-            
+
             TxtCod.setText(JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 0).toString());
             CodCompra = Integer.parseInt(TxtCod.getText());
             TxtDescricao.setText(JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 1).toString());
@@ -634,6 +635,10 @@ public class TelaCompra extends javax.swing.JFrame {
             DataISO = JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 3).toString();
             ConverterDataISO();
             TxtDataInicial.setText(DataConvertidaBR);
+
+            //Preenche a tabela itens
+            MostrarItens();
+            
         }
     }//GEN-LAST:event_JTDespesaMouseClicked
 
@@ -642,16 +647,11 @@ public class TelaCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_SalvarActionPerformed
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        
+
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void PainelItensCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PainelItensCompraMouseClicked
-        if (TxtCod.getText() == null || TxtCod.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Selecione uma Compra!!");
-            JTDespesa.requestFocus();
-        } else {
-            MostrarItens();
-        }
+
     }//GEN-LAST:event_PainelItensCompraMouseClicked
 
     /**

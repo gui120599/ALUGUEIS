@@ -28,8 +28,8 @@ public class TelaCliente extends javax.swing.JFrame {
 
     //carrega Tabela
     public void MostrarCliente() {
-        JTCliente.getColumnModel().getColumn(0).setPreferredWidth(60);
-        JTCliente.getColumnModel().getColumn(1).setPreferredWidth(100);
+        JTCliente.getColumnModel().getColumn(0).setPreferredWidth(10);
+        JTCliente.getColumnModel().getColumn(1).setPreferredWidth(200);
         JTCliente.getColumnModel().getColumn(2).setPreferredWidth(70);
         JTCliente.getColumnModel().getColumn(2).setPreferredWidth(70);
         DefaultTableModel modelo = (DefaultTableModel) JTCliente.getModel();
@@ -194,7 +194,7 @@ public class TelaCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Telefone", "CPF"
+                "Código", "Nome", "CPF", "Telefone"
             }
         ));
         JTCliente.addMouseListener(new java.awt.event.MouseAdapter() {

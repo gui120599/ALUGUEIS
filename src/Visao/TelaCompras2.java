@@ -10,7 +10,7 @@ import Dao.ItensCompraDao;
 import Dao.ItensEntradaDao;
 import Modelo.Compras;
 import Modelo.ItensCompra;
-import Modelo.ItensVenda;
+import Modelo.ItensEntrada;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +30,7 @@ public class TelaCompras2 extends javax.swing.JFrame {
     String ValorItemConvertido;
     String DataISO;
     Double TotalItem;
+    int Cod_Item;
 
     public TelaCompras2() {
         initComponents();
@@ -116,6 +117,20 @@ public class TelaCompras2 extends javax.swing.JFrame {
         idao.SalvarItem(i);
         LimparCamposItens();
         MostrarItens();
+    }
+
+    //Remover Item
+    public void RemoverItem() {
+        Cod_Item = Integer.parseInt(JTItensCompra.getValueAt(JTItensCompra.getSelectedRow(), 0).toString());
+
+        if (Cod_Item == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um Item!!");
+
+        } else {
+            ItensCompraDao idao = new ItensCompraDao();
+            idao.RemoverItensCompra(Cod_Item);
+            MostrarItens();
+        }
     }
 
     public void SalvarCompra() {
@@ -212,6 +227,7 @@ public class TelaCompras2 extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         LbValorTotalItem = new javax.swing.JLabel();
+        jBRemoverItem = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTItensCompra = new javax.swing.JTable();
 
@@ -230,7 +246,7 @@ public class TelaCompras2 extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(268, 268, 268)
+                .addGap(317, 317, 317)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -418,6 +434,13 @@ public class TelaCompras2 extends javax.swing.JFrame {
         LbValorTotalItem.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         LbValorTotalItem.setForeground(new java.awt.Color(0, 102, 255));
 
+        jBRemoverItem.setText("Remover");
+        jBRemoverItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoverItemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -427,24 +450,28 @@ public class TelaCompras2 extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(30, 30, 30)
-                        .addComponent(TxtDescItem, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(TxtDescItem, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                .addComponent(LbValorTotalItem, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel9))
-                                .addGap(20, 20, 20)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(TxtValorItem, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                                    .addComponent(TxtQuantidadeItem))))
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(20, 20, 20))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(24, 24, 24)))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(LbValorTotalItem, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(TxtValorItem, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                                .addComponent(TxtQuantidadeItem)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                            .addComponent(jBRemoverItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,12 +480,12 @@ public class TelaCompras2 extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(TxtDescItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(TxtValorItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(TxtValorItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TxtQuantidadeItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
@@ -466,7 +493,11 @@ public class TelaCompras2 extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
                             .addComponent(LbValorTotalItem, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBRemoverItem)))
                 .addContainerGap())
         );
 
@@ -593,6 +624,7 @@ public class TelaCompras2 extends javax.swing.JFrame {
             DataISO = JTDespesa.getValueAt(JTDespesa.getSelectedRow(), 3).toString();
             ConverterDataISO();
             TxtDataInicial.setText(DataConvertidaBR);
+            MostrarItens();
         }
     }//GEN-LAST:event_JTDespesaMouseClicked
 
@@ -626,6 +658,10 @@ public class TelaCompras2 extends javax.swing.JFrame {
             SalvarItemCompra();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jBRemoverItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoverItemActionPerformed
+        RemoverItem();        
+    }//GEN-LAST:event_jBRemoverItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -678,31 +714,23 @@ public class TelaCompras2 extends javax.swing.JFrame {
     private javax.swing.JTable JTDespesa;
     private javax.swing.JTable JTItensCompra;
     private javax.swing.JLabel LbValorTotalItem;
-    private javax.swing.JLabel LbValorTotalItem2;
     private javax.swing.JButton Salvar;
     private javax.swing.JButton Salvar1;
     private javax.swing.JTextField TxtCod;
     private javax.swing.JTextField TxtCodDinheiro;
     private javax.swing.JFormattedTextField TxtDataInicial;
     private javax.swing.JTextField TxtDescItem;
-    private javax.swing.JTextField TxtDescItem2;
     private javax.swing.JTextField TxtDescricao;
     private javax.swing.JTextField TxtPesquisa;
     private javax.swing.JTextField TxtQuantidadeItem;
-    private javax.swing.JTextField TxtQuantidadeItem2;
     private javax.swing.JTextField TxtValor;
     private javax.swing.JTextField TxtValorItem;
-    private javax.swing.JTextField TxtValorItem2;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jBRemoverItem;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -715,7 +743,6 @@ public class TelaCompras2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

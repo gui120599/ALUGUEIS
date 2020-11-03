@@ -7,7 +7,7 @@ package Dao;
 
 import Conexao.Conexao;
 import Modelo.ItensCompra;
-import Modelo.ItensVenda;
+import Modelo.ItensEntrada;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -53,6 +53,24 @@ public class ItensCompraDao {
         }
 
     }
+    
+    //Método Excluir
+    public int RemoverItensCompra(int Codigo) {
+        int qtdRegistrosAfetados = 0;
+        Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
+        try {
+            c.conectar();
+            String sql = "DELETE FROM ItensCompra WHERE cod_item_compra= " + Codigo + " ;";
+            JOptionPane.showMessageDialog(null, "Item Removido!");
+            qtdRegistrosAfetados = c.queryUpdate(sql);
+            return qtdRegistrosAfetados;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Remover: " + e);
+            return qtdRegistrosAfetados;
+        } finally {
+            c.desconectar();
+        }
+    }
 
 //Método Buscar
         public Collection<ItensCompra> BuscarItensCompra(int cod_compra) {
@@ -84,8 +102,8 @@ public class ItensCompraDao {
     }
 
 //Método Buscar
-    public Collection<ItensVenda> BuscarValorTotal(int cod_entrada) {
-        Collection<ItensVenda> ms = new ArrayList<>();
+    public Collection<ItensEntrada> BuscarValorTotal(int cod_entrada) {
+        Collection<ItensEntrada> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -94,7 +112,7 @@ public class ItensCompraDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                ItensVenda m = new ItensVenda();
+                ItensEntrada m = new ItensEntrada();
                 m.setCod_item(c.getResultSet().getInt("cod_item_entrada"));
                 m.setCod_venda(c.getResultSet().getInt("Cod_entrada"));
                 m.setDescricao_item(c.getResultSet().getString("descricao_item_entrada"));

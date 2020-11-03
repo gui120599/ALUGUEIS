@@ -26,8 +26,8 @@ public class TelaSelecionaCliente extends javax.swing.JDialog {
     }
      //carrega Tabela
     public void MostrarCliente() {
-        JTCliente.getColumnModel().getColumn(0).setPreferredWidth(60);
-        JTCliente.getColumnModel().getColumn(1).setPreferredWidth(100);
+        JTCliente.getColumnModel().getColumn(0).setPreferredWidth(10);
+        JTCliente.getColumnModel().getColumn(1).setPreferredWidth(250);
         JTCliente.getColumnModel().getColumn(2).setPreferredWidth(70);
         DefaultTableModel modelo = (DefaultTableModel) JTCliente.getModel();
         modelo.setNumRows(0);

@@ -9,7 +9,7 @@ package Modelo;
  *
  * @author Suporte T.I 2
  */
-public class ItensVenda {
+public class ItensEntrada {
     private int cod_item;
     private int cod_venda;
     private String descricao_item;
@@ -19,10 +19,10 @@ public class ItensVenda {
     private double valor_lucro;
     private double valor_total;
 
-    public ItensVenda() {
+    public ItensEntrada() {
     }
 
-    public ItensVenda(int cod_item, int cod_venda, String descricao_item, int quantidade, double valor_custo, double valor_venda, double valor_lucro, double valor_total) {
+    public ItensEntrada(int cod_item, int cod_venda, String descricao_item, int quantidade, double valor_custo, double valor_venda, double valor_lucro, double valor_total) {
         this.cod_item = cod_item;
         this.cod_venda = cod_venda;
         this.descricao_item = descricao_item;

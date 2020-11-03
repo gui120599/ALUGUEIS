@@ -6,7 +6,7 @@
 package Dao;
 
 import Conexao.Conexao;
-import Modelo.ItensVenda;
+import Modelo.ItensEntrada;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class ItensEntradaDao {
     String Senha_Banco = "";
 //Método Salvar
 
-    public int SalvarItem(ItensVenda a) {
+    public int SalvarItem(ItensEntrada a) {
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -57,9 +57,27 @@ public class ItensEntradaDao {
 
     }
 
+//Método Excluir
+    public int RemoverItensEntrada(int Codigo) {
+        int qtdRegistrosAfetados = 0;
+        Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
+        try {
+            c.conectar();
+            String sql = "DELETE FROM ItensEntrada WHERE cod_item_entrada= " + Codigo + " ;";
+            JOptionPane.showMessageDialog(null, "Item Removido!");
+            qtdRegistrosAfetados = c.queryUpdate(sql);
+            return qtdRegistrosAfetados;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar: " + e);
+            return qtdRegistrosAfetados;
+        } finally {
+            c.desconectar();
+        }
+    }
+
 //Método Buscar
-    public Collection<ItensVenda> BuscarItens(int cod_entrada) {
-        Collection<ItensVenda> ms = new ArrayList<>();
+    public Collection<ItensEntrada> BuscarItens(int cod_entrada) {
+        Collection<ItensEntrada> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -68,7 +86,7 @@ public class ItensEntradaDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                ItensVenda m = new ItensVenda();
+                ItensEntrada m = new ItensEntrada();
                 m.setCod_item(c.getResultSet().getInt("cod_item_entrada"));
                 m.setCod_venda(c.getResultSet().getInt("Cod_entrada"));
                 m.setDescricao_item(c.getResultSet().getString("descricao_item_entrada"));
@@ -89,8 +107,8 @@ public class ItensEntradaDao {
     }
 
 //Método Buscar
-    public Collection<ItensVenda> BuscarValorTotal(int cod_entrada) {
-        Collection<ItensVenda> ms = new ArrayList<>();
+    public Collection<ItensEntrada> BuscarValorTotal(int cod_entrada) {
+        Collection<ItensEntrada> ms = new ArrayList<>();
         Conexao c = new Conexao(Tipo_Banco, IP_Banco, Porta_Banco, Nome_Banco, Usuario_Banco, Senha_Banco);
         try {
             c.conectar();
@@ -99,7 +117,7 @@ public class ItensEntradaDao {
 
             c.query(sql);
             while (c.getResultSet().next()) {
-                ItensVenda m = new ItensVenda();
+                ItensEntrada m = new ItensEntrada();
                 m.setCod_item(c.getResultSet().getInt("cod_item_entrada"));
                 m.setCod_venda(c.getResultSet().getInt("Cod_entrada"));
                 m.setDescricao_item(c.getResultSet().getString("descricao_item_entrada"));

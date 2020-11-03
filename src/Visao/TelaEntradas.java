@@ -10,7 +10,7 @@ import Dao.ItensEntradaDao;
 import Dao.TiposPagamentosDao;
 import Dao.EntradasDao;
 import Modelo.CondicoesPagamentos;
-import Modelo.ItensVenda;
+import Modelo.ItensEntrada;
 import Modelo.TiposPagamentos;
 import Modelo.Entradas;
 import java.text.DecimalFormat;
@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Suporte T.I 2
  */
-public class TelaVenda extends javax.swing.JFrame {
+public class TelaEntradas extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCliente
@@ -29,8 +29,9 @@ public class TelaVenda extends javax.swing.JFrame {
     String CustoConvertido, VendaConvertido, LucroConvertido;
     Double LucroItem, TotalItem;
     int quantidade;
-    
-    public TelaVenda() {
+    int Cod_item;
+
+    public TelaEntradas() {
         initComponents();
         // MostrarCliente();
         TxtDescricaoVenda.requestFocus();
@@ -38,9 +39,9 @@ public class TelaVenda extends javax.swing.JFrame {
         PreencherComboCondicaoPagamento();
         AbrirVenda();
     }
-    
+
     public void AbrirVenda() {
-        EntradasDao idao = new EntradasDao();        
+        EntradasDao idao = new EntradasDao();
         idao.AbrirVenda(0);
         idao.BuscarUltimaVenda().forEach((c) -> {
             TxtCodVenda.setText(Integer.toString(c.getCod_venda()));
@@ -49,43 +50,43 @@ public class TelaVenda extends javax.swing.JFrame {
 
     //carrega Tabela
     public void MostrarItens() {
-        JTClientes.getColumnModel().getColumn(0).setPreferredWidth(60);
-        JTClientes.getColumnModel().getColumn(1).setPreferredWidth(100);
-        JTClientes.getColumnModel().getColumn(2).setPreferredWidth(70);
-        DefaultTableModel modelo = (DefaultTableModel) JTClientes.getModel();
+        JTItensEntrada.getColumnModel().getColumn(0).setPreferredWidth(60);
+        JTItensEntrada.getColumnModel().getColumn(1).setPreferredWidth(100);
+        JTItensEntrada.getColumnModel().getColumn(2).setPreferredWidth(70);
+        DefaultTableModel modelo = (DefaultTableModel) JTItensEntrada.getModel();
         modelo.setNumRows(0);
         ItensEntradaDao cdao = new ItensEntradaDao();
-        
+
         cdao.BuscarItens(Integer.parseInt(TxtCodVenda.getText())).forEach((c) -> {
             modelo.addRow(new Object[]{
                 c.getCod_item(),
                 c.getDescricao_item(),
                 c.getQuantidade(),
                 c.getValor_venda()
+            });
         });
-    });
     }
+
     //carrega Tabela
     public void MostrarValores() {
-        
-        
+
         ItensEntradaDao cdao = new ItensEntradaDao();
-        
+
         cdao.BuscarItens(Integer.parseInt(TxtCodVenda.getText())).forEach((c) -> {
-                LbLucro.setText(Double.toString(c.getValor_lucro()));
-                LbCusto.setText(Double.toString(c.getValor_custo()));
-                LbTotal.setText(Double.toString(c.getValor_total()));
-            
+            LbLucro.setText(Double.toString(c.getValor_lucro()));
+            LbCusto.setText(Double.toString(c.getValor_custo()));
+            LbTotal.setText(Double.toString(c.getValor_total()));
+
         });
     }
-    
+
     public void PreencherComboTipoPagamento() {
         TiposPagamentosDao udao = new TiposPagamentosDao();
         udao.BuscarTipoPagamento().forEach((u) -> {
             ComboBoxTipoPagamento.addItem(u);
         });
     }
-    
+
     public void PreencherComboCondicaoPagamento() {
         CondicoesPagamentosDao udao = new CondicoesPagamentosDao();
         udao.BuscarCondicao().forEach((u) -> {
@@ -101,7 +102,8 @@ public class TelaVenda extends javax.swing.JFrame {
         TxtCodTipoPagamento.setText("");
         TxtCodCondicaoPagamento.setText("");
     }
-    public void LimparCamposItens(){
+
+    public void LimparCamposItens() {
         TxtDescItem.setText("");
         TxtValorCustoItem.setText("");
         TxtValorVendaItem.setText("");
@@ -112,7 +114,7 @@ public class TelaVenda extends javax.swing.JFrame {
 
     //Salvar Item da Venda
     public void SalvarItemVenda() {
-        ItensVenda i = new ItensVenda();
+        ItensEntrada i = new ItensEntrada();
         ItensEntradaDao idao = new ItensEntradaDao();
         if (TxtDescItem.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Descrição do item é obrigatório!");
@@ -127,23 +129,40 @@ public class TelaVenda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Quantidade do item é obrigatório!");
             TxtQuantidadeItem.requestFocus();
         }
-        
+
         i.setDescricao_item(TxtDescItem.getText());
         i.setCod_venda(Integer.parseInt(TxtCodVenda.getText()));
         i.setQuantidade(Integer.parseInt(TxtQuantidadeItem.getText()));
-        i.setValor_custo(Double.parseDouble(TxtValorCustoItem.getText()));
-        i.setValor_venda(Double.parseDouble(TxtValorVendaItem.getText()));
+        i.setValor_custo(Double.parseDouble(CustoConvertido));
+        i.setValor_venda(Double.parseDouble(VendaConvertido));
         i.setValor_lucro(Double.parseDouble(TxtValorLucroItem.getText()));
         i.setValor_total(Double.parseDouble(LbValorTotalItem.getText()));
         idao.SalvarItem(i);
         LimparCamposItens();
         MostrarItens();
         MostrarValores();
+        TxtDescItem.requestFocus();
     }
-    public void SalvarVenda(){
+
+    //Remover Item
+    public void RemoverItem() {
+        Cod_item = Integer.parseInt(JTItensEntrada.getValueAt(JTItensEntrada.getSelectedRow(), 0).toString());
+
+        if (Cod_item == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um Item!!");
+
+        } else {
+            ItensEntradaDao idao = new ItensEntradaDao();
+            idao.RemoverItensEntrada(Cod_item);
+            MostrarItens();
+        }
+    }
+
+    //Salvar Venda
+    public void SalvarVenda() {
         Entradas v = new Entradas();
         EntradasDao vdao = new EntradasDao();
-        
+
         v.setCod_cliente(Integer.parseInt(TxtCodCliente.getText()));
         v.setCod_condicao_pagamento(Integer.parseInt(TxtCodCondicaoPagamento.getText()));
         v.setCod_tipo_pagamento(Integer.parseInt(TxtCodTipoPagamento.getText()));
@@ -198,8 +217,9 @@ public class TelaVenda extends javax.swing.JFrame {
         TxtValorLucroItem = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         LbValorTotalItem = new javax.swing.JLabel();
+        jBRemoverItem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JTClientes = new javax.swing.JTable();
+        JTItensEntrada = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         LbTotal = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -375,6 +395,13 @@ public class TelaVenda extends javax.swing.JFrame {
         LbValorTotalItem.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         LbValorTotalItem.setForeground(new java.awt.Color(0, 102, 255));
 
+        jBRemoverItem.setText("Remover");
+        jBRemoverItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoverItemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -391,8 +418,7 @@ public class TelaVenda extends javax.swing.JFrame {
                             .addComponent(jLabel14))
                         .addGap(22, 22, 22)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TxtLucro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TxtDescItem, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addComponent(TxtDescItem)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(TxtValorLucroItem, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -400,16 +426,19 @@ public class TelaVenda extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(TxtQuantidadeItem))
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(TxtValorCustoItem, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(TxtValorVendaItem, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TxtValorCustoItem, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LbValorTotalItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(TxtValorVendaItem, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(LbValorTotalItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TxtLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(3, 3, 3)
+                        .addComponent(jBRemoverItem)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -433,13 +462,15 @@ public class TelaVenda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(TxtLucro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBRemoverItem))
                     .addComponent(jLabel16)
                     .addComponent(LbValorTotalItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        JTClientes.setModel(new javax.swing.table.DefaultTableModel(
+        JTItensEntrada.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -447,9 +478,9 @@ public class TelaVenda extends javax.swing.JFrame {
                 "Código", "Descrição", "Qtd", "Valor Venda"
             }
         ));
-        JTClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        JTClientes.setGridColor(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(JTClientes);
+        JTItensEntrada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JTItensEntrada.setGridColor(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(JTItensEntrada);
 
         jLabel11.setFont(new java.awt.Font("Calibri", 2, 18)); // NOI18N
         jLabel11.setText("VALOR TOTAL");
@@ -615,7 +646,7 @@ public class TelaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_JTClienteMouseClicked
 
     private void SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarActionPerformed
-        //Salvar();        // TODO add your handling code here:
+        SalvarVenda();
     }//GEN-LAST:event_SalvarActionPerformed
 
     private void TxtQuantidadeItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtQuantidadeItemActionPerformed
@@ -646,19 +677,19 @@ public class TelaVenda extends javax.swing.JFrame {
             TxtValorCustoItem.requestFocus();
             JOptionPane.showMessageDialog(this, "Insira primeiro o valor de custo do item!");
         } else {
-            
+
             CustoConvertido = String.valueOf(TxtValorCustoItem.getText());
             VendaConvertido = String.valueOf(TxtValorVendaItem.getText());
             CustoConvertido = CustoConvertido.replaceAll(",", ".");
             VendaConvertido = VendaConvertido.replaceAll(",", ".");
-            
+
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(2);
             LucroItem = Double.parseDouble(VendaConvertido) - Double.parseDouble(CustoConvertido);
-            
+
             LucroConvertido = String.valueOf(TxtValorLucroItem.getText());
             TxtValorLucroItem.setText(df.format(LucroItem));
-            LucroConvertido = LucroConvertido.replaceAll(".", ",");
+            LucroConvertido = LucroConvertido.replaceAll("\\.", ",");
         }
     }//GEN-LAST:event_TxtValorVendaItemKeyReleased
 
@@ -674,6 +705,10 @@ public class TelaVenda extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         SalvarItemVenda();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jBRemoverItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoverItemActionPerformed
+        RemoverItem();
+    }//GEN-LAST:event_jBRemoverItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -692,21 +727,23 @@ public class TelaVenda extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEntradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEntradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEntradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEntradas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaVenda().setVisible(true);
+                new TelaEntradas().setVisible(true);
             }
         });
     }
@@ -714,7 +751,7 @@ public class TelaVenda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Object> ComboBoxCondicaoPagamento;
     private javax.swing.JComboBox<Object> ComboBoxTipoPagamento;
-    private javax.swing.JTable JTClientes;
+    private javax.swing.JTable JTItensEntrada;
     private javax.swing.JLabel LbCliente;
     private javax.swing.JLabel LbCusto;
     private javax.swing.JLabel LbLucro;
@@ -736,6 +773,7 @@ public class TelaVenda extends javax.swing.JFrame {
     private javax.swing.JTextField TxtValorLucroItem;
     private javax.swing.JTextField TxtValorVendaItem;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jBRemoverItem;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
