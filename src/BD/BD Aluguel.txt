@@ -9,6 +9,15 @@ CREATE TABLE Clientes(
 	cpf_cliente VARCHAR(20),
 	PRIMARY KEY(cod_cliente));
 
+CREATE TABLE Fornecedores(
+        cod_fornecedor INT AUTO_INCREMENT,
+        nome_fornecedor VARCHAR(90),
+        cpf_fornecedor VARCHAR(14),
+        cnpj_fornecedor VARCHAR(18),
+        telefone_fornecedor VARCHAR(14),
+        tipo_pessoa VARCHAR(10),
+        PRIMARY KEY(cod_fornecedor));
+
 CREATE TABLE CondicoesPagamentos(
 	cod_condicao INT AUTO_INCREMENT,
 	descricao_condicao VARCHAR(90),
@@ -72,4 +81,12 @@ CREATE TABLE Saldo(
 	hora_saldo TIME,
 	valor_saldo DECIMAL(10,2),
 	PRIMARY KEY(cod_saldo));
+
+CREATE TABLE Emprestimos(
+        cod_emprestimo INT AUTO_INCREMENT,
+        cod_fornecedor_emprestimo INT, FOREIGN KEY(cod_fornecedor_emprestimo)REFERENCES Fornecedores(cod_fornecedor),
+        desc_emprestimo VARCHAR(500),
+        valor_emprestimo DECIMAL(10,2),
+        situacao_emprestimo VARCHAR(10),
+        PRIMARY KEY(cod_emprestimo));
 	

@@ -9,22 +9,25 @@ package Modelo;
  *
  * @author guilherme.santos
  */
-public class Fornecedor {
+public class Fornecedores {
     private int Cod_Fornecedor;
     private String Nome_Fornecedor;
     private String CPF_Fornecedor;
     private String CNPJ_Fornecedor;
     private String Telefone_Fornecedor;
+    private String Tipo_Pessoa;
+    
 
-    public Fornecedor() {
+    public Fornecedores() {
     }
 
-    public Fornecedor(int Cod_Fornecedor, String Nome_Fornecedor, String CPF_Fornecedor, String CNPJ_Fornecedor, String Telefone_Fornecedor) {
+    public Fornecedores(int Cod_Fornecedor, String Nome_Fornecedor, String CPF_Fornecedor, String CNPJ_Fornecedor, String Telefone_Fornecedor, String Tipo_Pessoa) {
         this.Cod_Fornecedor = Cod_Fornecedor;
         this.Nome_Fornecedor = Nome_Fornecedor;
         this.CPF_Fornecedor = CPF_Fornecedor;
         this.CNPJ_Fornecedor = CNPJ_Fornecedor;
         this.Telefone_Fornecedor = Telefone_Fornecedor;
+        this.Tipo_Pessoa = Tipo_Pessoa;
     }
 
     public int getCod_Fornecedor() {
@@ -66,7 +69,13 @@ public class Fornecedor {
     public void setTelefone_Fornecedor(String Telefone_Fornecedor) {
         this.Telefone_Fornecedor = Telefone_Fornecedor;
     }
-    
-    
-    
+
+    public String getTipo_Pessoa() {
+        return Tipo_Pessoa;
+    }
+
+    public void setTipo_Pessoa(String Tipo_Pessoa) {
+        this.Tipo_Pessoa = Tipo_Pessoa;
+    }
+
 }
